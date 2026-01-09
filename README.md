@@ -161,7 +161,11 @@ npm run dev
 
 ## 📄 License
 
-MIT © 2025
+本教程采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans) 许可协议。
+
+- ✅ 可自由分享、转载，需注明出处
+- ✅ 可修改、演绎，需以相同协议分享
+- ❌ 禁止用于商业用途（付费课程、付费专栏、出版物等）
 
 ---
 

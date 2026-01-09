@@ -14,7 +14,7 @@
     "tutorial",
     "vitepress"
   ],
-  "license": "MIT",
+  "license": "CC-BY-NC-SA-4.0",
   "devDependencies": {
     "vitepress": "^2.0.0-alpha.15",
     "vue": "^3.5.0"
