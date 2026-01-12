@@ -18,6 +18,16 @@ prerequisite:
 
 # 5.20 上下文压缩
 
+## 📝 课程笔记
+
+本课核心知识点整理：
+
+<img src="/images/5-advanced/compaction-notes.mini.jpeg" 
+     alt="上下文压缩学霸笔记" 
+     data-zoom-src="/images/5-advanced/compaction-notes.jpeg" />
+
+---
+
 > 当对话太长时，OpenCode 会自动压缩历史消息，腾出空间继续对话。
 
 ---
@@ -370,6 +380,11 @@ Compaction Agent 使用的 prompt 是固定的。如果你发现压缩质量不�
 
 ## 附录：源码参考
 
+<details>
+<summary><strong>点击展开查看源码位置</strong></summary>
+
+> 更新时间：2026-01-13
+
 如果你对压缩机制的实现感兴趣，可以查看源码：
 
 | 功能 | 文件路径 | 行号 |
@@ -389,3 +404,5 @@ Compaction Agent 使用的 prompt 是固定的。如果你发现压缩质量不�
 - `OUTPUT_TOKEN_MAX = 32,000`：最大输出预留空间
 - `PRUNE_PROTECT = 40,000`：保护最近 40K tokens 的工具输出
 - `PRUNE_MINIMUM = 20,000`：最小裁剪阈值
+
+</details>
