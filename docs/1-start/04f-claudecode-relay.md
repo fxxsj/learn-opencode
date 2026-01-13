@@ -68,7 +68,7 @@ baseURL 的填写规则（常见两种给法）：
       },
       "models": {
         "claude-opus-4-5-20251101": {
-          "name": "zhongzhuang",
+          "name": "中转站的 opus 4.5",
           "limit": {
             "context": 200000,
             "output": 64000
@@ -90,8 +90,8 @@ baseURL 的填写规则（常见两种给法）：
 
 - `npm` 用来告诉 OpenCode：这个 provider 要按哪种"协议/SDK 驱动"发请求。Claude/Anthropic 兼容中转一般要用 `@ai-sdk/anthropic`；如果你删掉这行，OpenCode 可能会按默认的 OpenAI-compatible 方式去理解这个 provider，从而请求失败。
 - 你也可以直接改 `provider.anthropic` 来走中转；那种写法本质上同样是在走 Anthropic 这套协议，但不建议（原因见文末"补充说明"）。
-- `claude-opus-4-5-20251101` 会作为你在 OpenCode 里看到的"模型 ID"，在 `/models` 里显示成 `claudecode-relay/claude-opus-4-5-20251101`
-- `models.<id>.name` 需要替换成中转商要求的模型名（本章用 `zhongzhuang` 作为教学占位）
+- 配置的 key（如 `claude-opus-4-5-20251101`）**既是**你在 OpenCode 里看到的"模型 ID"，**也是**发给中转商 API 使用的模型名
+- `models.<key>.name` 是显示名称，可以随便写成中文（如"中转站的 opus 4.5"）
 - `limit.context` 和 `limit.output` 定义模型的上下文窗口和最大输出长度。**如果不配置，默认值为 0，会导致自动压缩功能失效**。推荐值见下表。
 
 | 模型 | context | output |
@@ -107,9 +107,32 @@ baseURL 的填写规则（常见两种给法）：
 
 你只需要选下面一种方式配置 Key：
 
-### 方案 1：把 Key 写在 `opencode.json`（更简单）
+#### 方案 1：把 Key 写在 `opencode.json`（最简单）
 
-在上面的 `provider.claudecode-relay.options` 里添加 `apiKey`，并推荐用 `{env:...}`：
+##### 方式 A：直接写 Key（最快）
+
+```jsonc
+{
+  "provider": {
+    "claudecode-relay": {
+      "options": {
+        "baseURL": "https://url.com/v1",
+        "apiKey": "你的API Key"
+      }
+    }
+  }
+}
+```
+
+直接把中转商给你的 Key 粘贴进去就行。
+
+::: warning 安全提示
+这样 Key 会明文保存在配置文件里。如果出于安全考虑，建议用方式 B。
+:::
+
+#### 方式 B：用环境变量（更安全）
+
+如果你不想把 Key 明文写在配置文件里，可以用环境变量：
 
 ```jsonc
 {
@@ -124,7 +147,15 @@ baseURL 的填写规则（常见两种给法）：
 }
 ```
 
-### 方案 2：把 Key 存到 OpenCode 认证（`auth.json`）
+然后在你的 shell 配置文件（`~/.bashrc` 或 `~/.zshrc`）里添加：
+
+```bash
+export CLAUDECODE_RELAY_API_KEY="你的API Key"
+```
+
+保存后运行 `source ~/.bashrc`（或重启终端）使环境变量生效。
+
+#### 方案 2：把 Key 存到 OpenCode 认证（`auth.json`）
 
 运行：
 
@@ -190,7 +221,61 @@ opencode
 |-----|------|------|
 | 404 / Not Found | baseURL 写错了 | 优先检查 `baseURL` 是否应该是 `.../v1`，并确认它能拼出 `.../v1/messages` |
 | 401 / Unauthorized | Key 无效/没权限 | 重新生成 Key，或检查套餐/权限 |
-| 选了模型就报错 | 模型名不支持 | 调整 `models.<id>.name` 为中转商支持的模型名 |
+| 选了模型就报错 | 模型名不支持 | 检查配置的 key（如 `claude-opus-4-5-20251101`）是否和中转商给的模型名完全一致 |
+
+---
+
+## 同时配置多个中转商
+
+OpenCode 支持同时配置多个中转商，你可以在 `provider` 下添加多个独立的 provider：
+
+```jsonc
+{
+  "provider": {
+    "relay-a": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "https://relay-a.com/v1",
+        "apiKey": "你的 A 中转商 Key"
+      },
+      "models": {
+        "claude-opus-4-5-20251101": {
+          "name": "A 中转的 opus 4.5",
+          "limit": {
+            "context": 200000,
+            "output": 64000
+          }
+        }
+      }
+    },
+    "relay-b": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "https://relay-b.com/v1",
+        "apiKey": "你的 B 中转商 Key"
+      },
+      "models": {
+        "claude-sonnet-4-5-20250514": {
+          "name": "B 中转的 sonnet 4.5",
+          "limit": {
+            "context": 200000,
+            "output": 64000
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+配置后在 `/models` 里可以看到：
+- `relay-a/claude-opus-4-5-20251101`
+- `relay-b/claude-sonnet-4-5-20250514`
+
+**使用场景**：
+- 不同中转商价格/速度不同，按需切换
+- 一个中转商挂了，快速切到另一个
+- 测试对比不同中转商的效果
 
 ---
 
