@@ -74,18 +74,34 @@ OpenCode 有两类 Agent：
 |------|------|----------|
 | **Primary** | 主 Agent，你直接交互的对象 | Tab 键切换 |
 | **Subagent** | 子 Agent，被主 Agent 调用执行专项任务 | `@agent名` 或自动调用 |
+| **All** | 混合模式，既可以作为主 Agent，也可以被调用 | Tab 切换或 @ 调用 |
 
 ### 它们如何协作
 
 ```
 用户 ←→ Primary Agent (build/plan)
               ↓
-         Task Tool
+         Task Tool (创建独立 Session)
               ↓
          Subagent (explore/general/你的自定义 Agent)
               ↓
          返回结果给 Primary
 ```
+
+### 子代理的运行机制（重要）
+
+理解子代理的运行机制对于设计高效 Agent 至关重要：
+
+1. **Session 隔离（无历史记忆）**
+   子代理运行在一个**全新的、独立的 Session** 中。这意味着：
+   - **看不到主 Agent 的对话历史**：它不知道你之前和主 Agent 聊了什么。
+   - **上下文仅包含 Prompt**：它的世界里只有你传给它的任务描述（Prompt）。
+   - **必须提供完整上下文**：调用时必须把任务所需的所有信息都写在 prompt 里。
+
+2. **All 模式的双重身份**
+   当 `mode: "all"` 的 Agent：
+   - **被 Tab 切换时**：它是主 Agent，拥有完整历史记忆。
+   - **被 @ 调用时**：它是子 Agent，受到 Session 隔离限制，看不到调用者的历史。
 
 ---
 
