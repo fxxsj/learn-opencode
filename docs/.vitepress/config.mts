@@ -340,6 +340,10 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: '更新日志', link: '/changelog/' },
+          { text: 'v1.1.20', link: '/changelog/v1.1.20' },
+          { text: 'v1.1.19', link: '/changelog/v1.1.19' },
+          { text: 'v1.1.18', link: '/changelog/v1.1.18' },
+          { text: 'v1.1.17', link: '/changelog/v1.1.17' },
           { text: 'v1.1.16', link: '/changelog/v1.1.16' },
           { text: 'v1.1.15', link: '/changelog/v1.1.15' },
           { text: 'v1.1.14', link: '/changelog/v1.1.14' },
