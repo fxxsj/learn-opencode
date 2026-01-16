@@ -70,14 +70,9 @@ prerequisite:
 
 **为什么**  不是所有模型都有变体，OpenCode 会先检查 `capabilities.reasoning`。
 
-**怎么做**  选用支持 reasoning 的模型（如 Anthropic / Gemini 2.5 / OpenAI）。
+**怎么做**  选用支持 reasoning 的模型（如 Anthropic / Gemini 3 / OpenAI）。
 
 **你应该看到**  模型列表中能出现 `high` / `max` 等变体。
-
-::: details 📦 源码依据
-- `ProviderTransform.variants()` 只有在 `model.capabilities.reasoning` 为 true 时返回变体。
-- `deepseek/minimax/glm/mistral` 被显式排除。
-:::
 
 ---
 
@@ -87,14 +82,15 @@ prerequisite:
 
 **怎么做**  按你使用的 Provider 填入对应字段：
 
-::: details 📦 Anthropic 示例（thinking.budgetTokens）
+**Anthropic 示例**（thinking.budgetTokens）
+
 ```jsonc
 {
   "$schema": "https://opencode.ai/config.json",
   "provider": {
     "anthropic": {
       "models": {
-        "claude-sonnet-4-20250514": {
+        "claude-sonnet-4-5": {
           "variants": {
             "high": {
               "thinking": { "type": "enabled", "budgetTokens": 20000 }
@@ -109,35 +105,16 @@ prerequisite:
   }
 }
 ```
-:::
 
-::: details 📦 Bedrock Claude 示例（reasoningConfig.budgetTokens）
+**Gemini 3 示例**（thinkingConfig.thinkingBudget）
+
 ```jsonc
 {
-  "provider": {
-    "amazon-bedrock": {
-      "models": {
-        "anthropic.claude-sonnet-4-20250514-v1:0": {
-          "variants": {
-            "high": {
-              "reasoningConfig": { "type": "enabled", "budgetTokens": 20000 }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
-:::
-
-::: details 📦 Gemini 2.5 示例（thinkingConfig.thinkingBudget）
-```jsonc
-{
+  "$schema": "https://opencode.ai/config.json",
   "provider": {
     "google": {
       "models": {
-        "gemini-2.5-flash": {
+        "gemini-3-flash": {
           "variants": {
             "high": {
               "thinkingConfig": { "includeThoughts": true, "thinkingBudget": 16000 }
@@ -152,7 +129,6 @@ prerequisite:
   }
 }
 ```
-:::
 
 **你应该看到**  重启后模型变体的数值生效。
 
@@ -183,7 +159,7 @@ prerequisite:
   "provider": {
     "anthropic": {
       "models": {
-        "claude-sonnet-4-20250514": {
+        "claude-sonnet-4-5": {
           "variants": {
             "极速": { "thinking": { "type": "enabled", "budgetTokens": 8000 } },
             "深度": { "thinking": { "type": "enabled", "budgetTokens": 32000 } }
@@ -206,7 +182,7 @@ OpenCode 会把你在 `opencode.json` 里写的变体**合并**到默认变体�
   "provider": {
     "anthropic": {
       "models": {
-        "claude-sonnet-4-20250514": {
+        "claude-sonnet-4-5": {
           "variants": {
             "high": { "disabled": true },
             "max": { "disabled": true },
@@ -221,7 +197,8 @@ OpenCode 会把你在 `opencode.json` 里写的变体**合并**到默认变体�
 ```
 :::
 
-::: details 📦 第三方中转站怎么配
+**第三方中转站怎么配**
+
 如果你的中转站是 `openai-compatible`，默认使用 `reasoningEffort`。示例：
 
 ```jsonc
@@ -256,7 +233,7 @@ OpenCode 会把你在 `opencode.json` 里写的变体**合并**到默认变体�
         "apiKey": "{env:RELAY_API_KEY}"
       },
       "models": {
-        "claude-sonnet-4-20250514": {
+        "claude-sonnet-4-5": {
           "variants": {
             "high": {
               "thinking": { "type": "enabled", "budgetTokens": 20000 }
@@ -273,7 +250,6 @@ OpenCode 会把你在 `opencode.json` 里写的变体**合并**到默认变体�
 ```
 
 前提是：你的中转站服务端会把 `thinking` 字段原样转发到 Anthropic。
-:::
 
 ---
 
@@ -308,7 +284,12 @@ OpenCode 会把你在 `opencode.json` 里写的变体**合并**到默认变体�
 
 ## 下一课预告
 
-> 下一课我们学习 **自定义模型上下文限制**，把 context 和 output 的上限也掌握在手里。
+> 🎉 **恭喜你完成了第五阶段！** 你已经掌握了 OpenCode 的深度定制能力。
+>
+> 接下来可以：
+> - 回顾 [第五阶段目录](./index) 查阅其他参考手册
+> - 进入 [第四阶段场景实战](/4-scenarios/) 学习具体应用
+> - 查阅 [附录](/appendix/) 获取更多参考资料
 
 ---
 
@@ -324,8 +305,7 @@ OpenCode 会把你在 `opencode.json` 里写的变体**合并**到默认变体�
 | 变体生成入口 | [`src/provider/transform.ts`](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/provider/transform.ts#L297-L477) | 297-477 |
 | reasoning 过滤与排除 | [`src/provider/transform.ts`](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/provider/transform.ts#L298-L301) | 298-301 |
 | Anthropic 思考预算默认值 | [`src/provider/transform.ts`](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/provider/transform.ts#L371-L385) | 371-385 |
-| Bedrock 思考预算默认值 | [`src/provider/transform.ts`](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/provider/transform.ts#L388-L405) | 388-405 |
-| Gemini 2.5 思考预算默认值 | [`src/provider/transform.ts`](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/provider/transform.ts#L421-L439) | 421-439 |
+| Gemini 3 思考预算默认值 | [`src/provider/transform.ts`](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/provider/transform.ts#L421-L439) | 421-439 |
 | 变体配置 Schema | [`src/config/config.ts`](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/config/config.ts#L818-L833) | 818-833 |
 | 变体配置合并 | [`src/provider/provider.ts`](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/provider/provider.ts#L929-L936) | 929-936 |
 | Ctrl+T 默认快捷键 | [`src/config/config.ts`](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/config/config.ts#L632-L688) | 632-688 |
