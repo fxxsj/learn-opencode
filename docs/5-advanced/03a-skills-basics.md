@@ -154,6 +154,27 @@ Skill 不是把所有内容塞进上下文，而是**分层加载**：
 
 > 项目路径会从当前目录向上遍历到 git 根目录。
 
+::: info 自定义配置目录
+通过 `OPENCODE_CONFIG_DIR` 环境变量可以指定额外的 Skill 搜索路径：
+
+```bash
+export OPENCODE_CONFIG_DIR="/path/to/custom/config"
+```
+
+OpenCode 会同时扫描以下位置：
+- 默认配置目录：`~/.config/opencode/skill/`
+- 自定义配置目录：`$OPENCODE_CONFIG_DIR/skill/`
+
+这对于团队共享 Skill 或在不同环境中使用不同的 Skill 集合非常有用。
+
+源码证据：`skill/skill.ts:82-85`
+```typescript
+const configDirs = process.env.OPENCODE_CONFIG_DIR
+  ? [process.env.OPENCODE_CONFIG_DIR, ...defaultConfigDirs]
+  : defaultConfigDirs
+```
+:::
+
 ### 嵌套目录支持
 
 OpenCode 支持嵌套的 Skill 目录：
