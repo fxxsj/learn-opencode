@@ -104,13 +104,13 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 ```
 
-::: warning 以管理员身份运行？
-如果你的 PowerShell 是以**管理员身份**运行的（窗口标题带"管理员"字样），上面的命令会报错。需要改用这个命令：
-
-```powershell
-iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-```
-:::
+> **⚠️ 以管理员身份运行？**
+>
+> 如果你的 PowerShell 是以**管理员身份**运行的（窗口标题带"管理员"字样），上面的命令会报错。需要改用这个命令：
+>
+> ```powershell
+> iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+> ```
 
 **第 3 步：安装 Git（Scoop 需要 Git 来添加 bucket）**
 
