@@ -1,7 +1,7 @@
 <template>
   <div class="ad-support-notice">
     <p>
-      本站教程完全免费，广告收入用于覆盖服务器成本。感谢您的支持！
+      本站内容免费。页面可能展示广告，用于覆盖服务器与维护成本。
     </p>
   </div>
 </template>
