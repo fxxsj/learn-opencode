@@ -38,6 +38,7 @@ description: 深入学习 OpenCode 配置、Agent 系统、Skill、MCP 扩展、
 | [5.9 远程模式](./09a-remote-basics) | 服务器和 Web 界面 | 延伸 |
 | [5.10 SDK 开发](./10a-sdk-basics) | 开发者扩展 | 延伸 |
 | [5.11 企业版功能](./11-enterprise) | 团队和企业特性 | 参考 |
+| [5.11a 企业认证集成](./11a-enterprise-auth) | 对接统一认证与组织默认配置 | 实操 |
 | [5.12 插件开发](./12a-plugins-basics) | 扩展功能开发 | 延伸 |
 | [5.12c Hook 教程](./12c-hooks) | 插件钩子/配置钩子全解 | 延伸 |
 | [5.13 自定义工具](./13-custom-tools) | 工具封装技巧 | 实操 |

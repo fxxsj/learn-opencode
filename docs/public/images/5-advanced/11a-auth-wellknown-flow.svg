@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+  <defs>
+    <style>
+      .bg { fill: #FFFFFF; }
+      .ink { fill: #333333; }
+      .sub { fill: #666666; }
+      .box { fill: #FFFFFF; stroke: #D9D9D9; stroke-width: 2; }
+      .divider { stroke: #E6E6E6; stroke-width: 2; }
+      .arrow { stroke: #BFBFBF; stroke-width: 3; fill: none; }
+
+      .h1 { font: 800 26px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      .h2 { font: 800 18px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      .t { font: 15px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      .small { font: 13px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      .mono { font: 13px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+      .hlY { fill: #FFD700; }
+      .hlP { fill: #FF69B4; }
+      .hlB { fill: #4169E1; }
+      .hlG { fill: #32CD32; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="520" />
+
+  <!-- Title (content only) -->
+  <text class="ink h1" x="40" y="60">well-known 工作流：从“统一登录”到“默认配置”</text>
+  <text class="sub small" x="40" y="86">路径：opencode auth login &lt;url&gt; → 保存 token → 启动时注入 env + 拉取并合并 config</text>
+
+  <!-- Top row: 3 steps -->
+  <rect class="box" x="40" y="120" width="340" height="150" rx="16" />
+  <rect class="box" x="430" y="120" width="340" height="150" rx="16" />
+  <rect class="box" x="820" y="120" width="340" height="150" rx="16" />
+
+  <!-- Step 1 -->
+  <circle class="hlY" cx="70" cy="150" r="16" />
+  <text class="ink h2" x="98" y="156">你执行登录命令</text>
+  <text class="ink mono" x="70" y="192">opencode auth login https://ai.company.internal</text>
+  <line class="divider" x1="70" y1="210" x2="360" y2="210" />
+  <text class="sub small" x="70" y="236">OpenCode 会去请求：</text>
+  <text class="ink mono" x="70" y="258">GET /.well-known/opencode</text>
+
+  <!-- Step 2 -->
+  <circle class="hlY" cx="460" cy="150" r="16" />
+  <text class="ink h2" x="488" y="156">OpenCode 取 token 并保存</text>
+  <text class="ink small" x="460" y="192">读取 JSON 里的 auth.command / auth.env</text>
+  <text class="ink small" x="460" y="214">执行 auth.command，stdout=token</text>
+  <text class="sub small" x="460" y="240">写入本机 auth.json（type=wellknown）</text>
+
+  <!-- Step 3 -->
+  <circle class="hlY" cx="850" cy="150" r="16" />
+  <text class="ink h2" x="878" y="156">后续启动时生效</text>
+  <text class="ink small" x="850" y="192">注入已保存 token：</text>
+  <text class="ink mono" x="850" y="212">process.env[auth.env] = token</text>
+  <text class="ink small" x="850" y="238">再次拉取 /.well-known/opencode</text>
+  <text class="sub small" x="850" y="258">合并其中的 config（组织默认）</text>
+
+  <!-- Arrows between top boxes -->
+  <path class="arrow" d="M 380 195 C 405 195, 405 195, 430 195" />
+  <polygon points="430,195 418,189 418,201" fill="#BFBFBF" />
+  <path class="arrow" d="M 770 195 C 795 195, 795 195, 820 195" />
+  <polygon points="820,195 808,189 808,201" fill="#BFBFBF" />
+
+  <!-- Pink warning note -->
+  <rect x="40" y="290" width="560" height="80" rx="14" fill="#FFFFFF" stroke="#FF69B4" stroke-width="3" />
+  <rect class="hlP" x="58" y="310" width="10" height="18" rx="3" />
+  <text class="ink h2" x="76" y="326">注意：token 续期边界</text>
+  <text class="ink small" x="58" y="352">auth.command 只在你执行一次登录时运行；后续启动不会自动刷新/续期。</text>
+  <text class="sub small" x="58" y="370">短期 token / 签名 / 刷新：用方式 C（插件）更合适。</text>
+
+  <!-- Blue JSON box -->
+  <rect x="640" y="290" width="520" height="180" rx="14" fill="#FFFFFF" stroke="#4169E1" stroke-width="3" />
+  <rect class="hlB" x="658" y="310" width="10" height="18" rx="3" />
+  <text class="ink h2" x="676" y="326">/.well-known/opencode 返回结构（最小骨架）</text>
+  <text class="ink mono" x="658" y="356">{</text>
+  <text class="ink mono" x="678" y="378">"auth": { "command": [...], "env": "COMPANY_AI_TOKEN" },</text>
+  <text class="ink mono" x="678" y="400">"config": { "$schema": "https://opencode.ai/config.json", ... }</text>
+  <text class="ink mono" x="658" y="422">}</text>
+  <text class="sub small" x="658" y="452">提示：config 里若下发 plugin，可能触发插件安装与执行（信任边界）。</text>
+
+  <!-- Green tip note -->
+  <rect x="40" y="392" width="560" height="78" rx="14" fill="#FFFFFF" stroke="#32CD32" stroke-width="3" />
+  <rect class="hlG" x="58" y="412" width="10" height="18" rx="3" />
+  <text class="ink h2" x="76" y="428">你真正想要的结果</text>
+  <text class="ink small" x="58" y="454">团队默认配置里写好：provider（内网网关）+ model（内网模型）+ disabled_providers（禁外网）。</text>
+</svg>

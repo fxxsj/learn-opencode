@@ -48,6 +48,7 @@ description: 根据你的身份选择学习路径：内容创作者、程序员�
 | [B3 文档与 Git](./coder-docs-git) | README、commit、PR | 20 分钟 |
 | [B4 CI/CD 集成](./coder-cicd) | GitHub Actions、自动审查 | 25 分钟 |
 | [B5 专属开发 Agent](./coder-agents) | Code Reviewer、测试 Agent | 30 分钟 |
+| [B6 内网/离线部署](./coder-intranet) | 企业内网、离线环境配置 | 20 分钟 |
 
 [开始学习 →](./coder-daily)
 

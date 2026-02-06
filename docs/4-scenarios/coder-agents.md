@@ -343,11 +343,13 @@ description: 综合代码审查
 3. 创建 Test Writer Agent
 4. 组合多个 Agent 形成工作流
 
-**恭喜你完成了程序员线全部课程！**
-
 ---
 
-## 下一步建议
+## 下一课预告
 
-- 想学更多定制技巧？→ [第五阶段：深度定制](/5-advanced/)
-- 想试试其他场景？→ [内容创作线](/4-scenarios/writer-workflow) 或 [效率提升线](/4-scenarios/office-files)
+> 下一课我们学习 **[B6 内网/离线部署](./coder-intranet)**。
+>
+> 你会学到：
+> - 在企业内网环境运行 OpenCode
+> - 禁用所有外网请求
+> - 配置内部 AI 网关

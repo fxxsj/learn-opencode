@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+  <defs>
+    <style>
+      .bg { fill: #FFFFFF; }
+      .ink { fill: #333333; }
+      .sub { fill: #666666; }
+      .card { fill: #FFFFFF; stroke: #D9D9D9; stroke-width: 2; }
+      .shadow { fill: none; stroke: #F0F0F0; stroke-width: 6; }
+
+      .h1 { font: 800 26px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      .h2 { font: 800 18px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      .t { font: 15px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      .small { font: 13px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+      .hlY { fill: #FFD700; }
+      .hlP { fill: #FF69B4; }
+      .hlB { fill: #4169E1; }
+      .hlG { fill: #32CD32; }
+
+      .chipText { fill: #333333; font: 800 12px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      .chip { fill: #FFFFFF; stroke-width: 2; }
+      .chipY { stroke: #FFD700; }
+      .chipP { stroke: #FF69B4; }
+      .chipB { stroke: #4169E1; }
+      .chipG { stroke: #32CD32; }
+
+      .dotG { fill: #32CD32; }
+      .dotP { fill: #FF69B4; }
+      .dotB { fill: #4169E1; }
+      .dotY { fill: #FFD700; }
+
+      .divider { stroke: #E6E6E6; stroke-width: 2; }
+      .arrow { stroke: #CFCFCF; stroke-width: 3; fill: none; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="520" />
+
+  <!-- Title (content only, no course header) -->
+  <text class="ink h1" x="40" y="60">三种企业认证接入方式，怎么选？</text>
+  <text class="sub small" x="40" y="86">口诀：能注入就用环境变量；想统一就用 well-known；要续期/签名就用插件</text>
+
+  <!-- Cards layout (3 columns) -->
+  <rect class="shadow" x="38" y="118" width="364" height="362" rx="18" />
+  <rect class="shadow" x="418" y="118" width="364" height="362" rx="18" />
+  <rect class="shadow" x="798" y="118" width="364" height="362" rx="18" />
+
+  <rect class="card" x="40" y="120" width="360" height="358" rx="18" />
+  <rect class="card" x="420" y="120" width="360" height="358" rx="18" />
+  <rect class="card" x="800" y="120" width="360" height="358" rx="18" />
+
+  <!-- Column A -->
+  <rect class="hlY" x="62" y="146" width="10" height="18" rx="3" />
+  <text class="ink h2" x="78" y="162">A. 环境变量</text>
+  <rect class="chip chipG" x="62" y="176" width="92" height="24" rx="12" />
+  <text class="chipText" x="74" y="192">最省事</text>
+  <rect class="chip chipB" x="162" y="176" width="142" height="24" rx="12" />
+  <text class="chipText" x="174" y="192">适合 K8s/CI</text>
+
+  <line class="divider" x1="62" y1="214" x2="378" y2="214" />
+
+  <circle class="dotG" cx="72" cy="240" r="6" />
+  <text class="ink t" x="88" y="245">你们自己把 Token 注入到 env</text>
+
+  <circle class="dotB" cx="72" cy="268" r="6" />
+  <text class="ink t" x="88" y="273">OpenCode 只读：provider.env</text>
+
+  <circle class="dotP" cx="72" cy="310" r="6" />
+  <text class="ink t" x="88" y="315">团队默认配置需要你们同步</text>
+  <text class="sub small" x="88" y="336">（例如默认 model / 禁用外网 provider）</text>
+
+  <rect class="chip chipB" x="62" y="360" width="316" height="86" rx="12" />
+  <text class="ink small" x="76" y="384">蓝色框：你要准备的最小东西</text>
+  <text class="ink small" x="76" y="406">1) opencode.json 里写 provider.env</text>
+  <text class="ink small" x="76" y="428">2) 运行前 export COMPANY_AI_TOKEN</text>
+
+  <!-- Column B -->
+  <rect class="hlY" x="442" y="146" width="10" height="18" rx="3" />
+  <text class="ink h2" x="458" y="162">B. well-known</text>
+  <rect class="chip chipY" x="442" y="176" width="128" height="24" rx="12" />
+  <text class="chipText" x="454" y="192">团队推广优先</text>
+  <rect class="chip chipP" x="578" y="176" width="190" height="24" rx="12" />
+  <text class="chipText" x="590" y="192">注意信任边界</text>
+
+  <line class="divider" x1="442" y1="214" x2="758" y2="214" />
+
+  <circle class="dotG" cx="452" cy="240" r="6" />
+  <text class="ink t" x="468" y="245">登录一次：执行 auth.command 保存 token</text>
+
+  <circle class="dotB" cx="452" cy="268" r="6" />
+  <text class="ink t" x="468" y="273">后续启动：注入已保存 token + 拉 config</text>
+
+  <circle class="dotP" cx="452" cy="310" r="6" />
+  <text class="ink t" x="468" y="315">不自动续期；短期 token 选插件</text>
+
+  <rect class="chip chipG" x="442" y="342" width="316" height="104" rx="12" />
+  <text class="ink small" x="456" y="366">绿色框：well-known 能解决什么</text>
+  <text class="ink small" x="456" y="388">- 统一登录入口：opencode auth login &lt;url&gt;</text>
+  <text class="ink small" x="456" y="410">- 组织默认配置：model / provider / disabled_providers</text>
+  <text class="ink small" x="456" y="432">- 但：远程 config/plugin 必须可信且可审计</text>
+
+  <!-- Column C -->
+  <rect class="hlY" x="822" y="146" width="10" height="18" rx="3" />
+  <text class="ink h2" x="838" y="162">C. 认证插件</text>
+  <rect class="chip chipB" x="822" y="176" width="108" height="24" rx="12" />
+  <text class="chipText" x="834" y="192">最灵活</text>
+  <rect class="chip chipP" x="938" y="176" width="198" height="24" rx="12" />
+  <text class="chipText" x="950" y="192">开发/维护成本高</text>
+
+  <line class="divider" x1="822" y1="214" x2="1138" y2="214" />
+
+  <circle class="dotG" cx="832" cy="240" r="6" />
+  <text class="ink t" x="848" y="245">OAuth / 设备码 / 自动刷新 token</text>
+
+  <circle class="dotB" cx="832" cy="268" r="6" />
+  <text class="ink t" x="848" y="273">可改 headers/params/签名（hook）</text>
+
+  <circle class="dotP" cx="832" cy="310" r="6" />
+  <text class="ink t" x="848" y="315">需要你们自己写插件并长期维护</text>
+
+  <rect class="chip chipB" x="822" y="342" width="316" height="104" rx="12" />
+  <text class="ink small" x="836" y="366">蓝色框：插件里常用的三件套</text>
+  <text class="ink small" x="836" y="388">1) auth.methods（登录流程）</text>
+  <text class="ink small" x="836" y="410">2) auth.loader（生成 provider options）</text>
+  <text class="ink small" x="836" y="432">3) chat.headers / chat.params（改请求）</text>
+
+  <!-- light arrows between columns -->
+  <path class="arrow" d="M 404 300 C 414 300, 414 300, 416 300" />
+  <polygon points="416,300 404,294 404,306" fill="#CFCFCF" />
+  <path class="arrow" d="M 784 300 C 794 300, 794 300, 796 300" />
+  <polygon points="796,300 784,294 784,306" fill="#CFCFCF" />
+</svg>

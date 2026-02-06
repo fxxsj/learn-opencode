@@ -213,6 +213,7 @@ export default defineConfig({
               { text: 'B3 文档与 Git', link: '/4-scenarios/coder-docs-git' },
               { text: 'B4 CI/CD 集成', link: '/4-scenarios/coder-cicd' },
               { text: 'B5 专属 Agent', link: '/4-scenarios/coder-agents' },
+              { text: 'B6 内网/离线部署', link: '/4-scenarios/coder-intranet' },
             ]
           },
           {
@@ -296,10 +297,11 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: '5.10a SDK 基础', link: '/5-advanced/10a-sdk-basics' },
-              { text: '5.10b API 参考', link: '/5-advanced/10b-sdk-reference' },
+          { text: '5.10b API 参考', link: '/5-advanced/10b-sdk-reference' },
             ]
           },
           { text: '5.11 企业版', link: '/5-advanced/11-enterprise' },
+          { text: '5.11a 企业认证集成', link: '/5-advanced/11a-enterprise-auth' },
           { 
             text: '5.12 插件开发',
             collapsed: true,
